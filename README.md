@@ -1,5 +1,5 @@
 # Storm
-###### 0.3.0 [BETA]
+###### 0.3.1 [BETA]
 
 this library provides a light but powerful way to handle localStorage javascript data, in a simple CRUD.
 

@@ -30,23 +30,23 @@ for save data (assuming we use the cats collection) you just need to run the sav
 
 ```js
 cats.save({
-	name: 'Sparky',
-	age: 4,
-	color: 'brown'
+   name: 'Sparky',
+   age: 4,
+   color: 'brown'
 })
 ```
 for each execution of this method, a new object is saved, then, let's keep 2 more cats.
 ```js
 cats.save({
-	name: 'Pillow paws',
-	age: 6,
-	color: 'white'
+   name: 'Pillow paws',
+   age: 6,
+   color: 'white'
 })
 
 cats.save({
-	name: 'Destroyer',
-	age: 6,
-	color: 'brown'
+   name: 'Destroyer',
+   age: 6,
+   color: 'brown'
 })
 ```
 ---
@@ -66,17 +66,17 @@ cats.find()
 
 // returns entire in a JSON
 [{
-	name: 'Sparky',
-	age: 4,
-	color: 'brown'
+   name: 'Sparky',
+   age: 4,
+   color: 'brown'
 },{
-	name: 'Pillow paws',
-	age: 6,
-	color: 'white'
+   name: 'Pillow paws',
+   age: 6,
+   color: 'white'
 },{
-	name: 'Destroyer',
-	age: 6,
-	color: 'brown'
+   name: 'Destroyer',
+   age: 6,
+   color: 'brown'
 }]
 ```
 
@@ -85,33 +85,33 @@ we can invoke the `find` method passing an object as a parameter, this object co
 
 ```js
 cats.find({
-	color: 'brown'
+   color: 'brown'
 })
 
 // returns only cats that are brown
 [{
- name: 'Sparky',
- age: 4,
- color: 'brown'
+   name: 'Sparky',
+   age: 4,
+   color: 'brown'
 },{
- name: 'Destroyer',
- age: 6,
- color: 'brown'
+   name: 'Destroyer',
+   age: 6,
+   color: 'brown'
 }]
 ```
 we can use more than 1 condition.
 ```js
 // find ( conditions )
 cats.find({
-	color: 'brown',
-	age: 4
+   color: 'brown',
+   age: 4
 })
 
 // returns
 [{
- name: 'Sparky',
- age: 4,
- color: 'brown'
+   name: 'Sparky',
+   age: 4,
+   color: 'brown'
 }]
 ```
 
@@ -122,16 +122,16 @@ if we pass as a last parameter a string defining which fields we want to recover
 // find ( conditions, fields)
 
 cats.find({
-	color: 'brown'
+   color: 'brown'
 }, 'name age') // <- separated by spaces
 
 // returns
 [{
-	name: 'Sparky',
-	age: 4
+   name: 'Sparky',
+   age: 4
 },{
-	name: 'Destroyer',
-	age: 6
+   name: 'Destroyer',
+   age: 6
 }]
 ```
 ---
@@ -140,56 +140,56 @@ cats.find({
 the update method recive 1 parameter, a JSON with 2 main nodes `where` and `set`.
 ```js
 cats.update({
-	where: {
-		// conditions
-	},
-	set: {
-		// updates
-	}
+   where: {
+      // conditions
+   },
+   set: {
+      // updates
+   }
 })
 ```
 For example, if we want all brown cats to be 8 years old, we write the following.
 
 ```js
 cats.update({
-	where: {
-		color: 'brown'
-	},
-	set: {
-		age: 8
-	}
+   where: {
+      color: 'brown'
+   },
+   set: {
+      age: 8
+   }
 })
 ```
 there may be more than one condition and more than one data to update.
 ```js
 cats.update({
-	where: {
-		color: 'brown',
-		age: 8
-	},
-	set: {
-		name: 'Kitties',
-		newField: 'this cat was affected'
-	}
+   where: {
+      color: 'brown',
+      age: 8
+   },
+   set: {
+      name: 'Kitties',
+      newField: 'this cat was affected'
+   }
 })
 
 cats.find()
 
 // now returns
 [{ // cat 1
-	name: 'Kitties',
-	age: 8,
-	color: 'brown',
-	newField: 'this cats was affected'
+   name: 'Kitties',
+   age: 8,
+   color: 'brown',
+   newField: 'this cats was affected'
 },{ // cat 2
-	name: 'Pillow paws',
-	age: 6,
-	color: 'white'
+   name: 'Pillow paws',
+   age: 6,
+   color: 'white'
 },{ // cat 3
-	name: 'Kitties',
-	age: 8,
-	color: 'brown',
-	newField: 'this cat was affected'
+   name: 'Kitties',
+   age: 8,
+   color: 'brown',
+   newField: 'this cat was affected'
 }]
 ```
 ---

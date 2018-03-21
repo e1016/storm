@@ -1,0 +1,22 @@
+{
+  "name": "storm",
+  "version": "0.1.0",
+  "description": "",
+  "main": "store.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/e1016/storm.git"
+  },
+  "keywords": [
+    "orm",
+    "localStorage",
+    "javascript",
+    "localStorageDB"
+  ],
+  "author": "e1016",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/e1016/storm/issues"
+  },
+  "homepage": "https://github.com/e1016/storm#readme"
+}

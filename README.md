@@ -1,5 +1,5 @@
 # Storm
-###### 0.2.0 [BETA]
+###### 0.3.0 [BETA]
 
 this library provides a light but powerful way to handle localStorage javascript data, in a simple CRUD.
 
@@ -200,3 +200,5 @@ the simplest method.
 cats.delete()
 ```
 remove all data from collection.
+
+###### storm is currently in beta, wait for more soon...

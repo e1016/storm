@@ -20,7 +20,7 @@
 
 	// initializing Store class model
 	let Storaged = function (str) {
-		if (!str && typeof str === 'string') throw '[Store Error]: Collection reference is not defined';
+		if (!str && typeof str !== 'string') throw '[Store Error]: Collection reference is not defined';
 		this.collection = str;
 	}
 

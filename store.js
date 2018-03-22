@@ -49,8 +49,7 @@
     localStorage.removeItem(this.collection);
   }
 
-  // Find method
-  Storaged.prototype.find = function (values, nod) {
+  let __finder_prot = function (values, nod, collection) {
     let data,
         tmp = [],
         tmpRefactor = {};
@@ -58,7 +57,7 @@
     // if values is defined
     if (values) {
       if (typeof values !== 'object') throw '[Store Error]: "find" method expect a JSON';
-      data = JSON.parse(localStorage.getItem(this.collection));
+      data = JSON.parse(localStorage.getItem(collection));
 
       // if the node is defined, it responds
       // only with the requested nodes
@@ -84,16 +83,20 @@
           })
         }
       }
-      // this returns a single object if node.length is 1
-      // else, returns an array, disabled
-      // -------
-      // return (tmp.length === 0) ? undefined : ( (tmp.length === 1) ? tmp[0] : tmp );
-      // -------
-      // return nodes
       return tmp;
     } else {
-      return JSON.parse(localStorage.getItem(this.collection));
+      return JSON.parse(localStorage.getItem(collection));
     }
+  }
+
+  // Find method
+  Storaged.prototype.find = function (values, nod) {
+    return __finder_prot(values, nod, this.collection)
+  }
+
+  // Find one method
+  Storaged.prototype.findOne = function (values, nod) {
+    return (__finder_prot(values, nod, this.collection))[0]
   }
 
   // update method

@@ -1,5 +1,5 @@
 # Storm
-###### 0.3.1 [BETA]
+###### 0.4.0 [BETA]
 
 this library provides a light but powerful way to handle localStorage javascript data, in a simple CRUD.
 
@@ -119,7 +119,7 @@ cats.find({
 if we pass as a last parameter a string defining which fields we want to recover, then we will only obtain those fields, like this.
 
 ```js
-// find ( conditions, fields)
+// find ( conditions, fields )
 
 cats.find({
    color: 'brown'
@@ -133,6 +133,23 @@ cats.find({
    name: 'Destroyer',
    age: 6
 }]
+```
+
+---
+
+you can too use `findOne` method, that returns the first coincidence.
+
+```js
+// findOne ( conditions, fields )
+cats.findOne({
+   color: 'brown'
+}, 'name age')
+
+// returns
+{
+   name: 'Sparky',
+   age: 4
+}
 ```
 ---
 #### Update

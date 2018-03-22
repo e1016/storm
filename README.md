@@ -1,3 +1,6 @@
+
+![Storm JS logo](./logo.png)
+
 # Storm
 ###### 0.4.0 [BETA]
 

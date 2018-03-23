@@ -1,5 +1,7 @@
 
-![Storm JS logo](./logo.png)
+<p align="center">
+   <img src="./logo.png" alt="Storm JS logo">
+</p>
 
 # Storm
 ###### Storage Object-Relational Mapping v0.5.0 [BETA]

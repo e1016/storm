@@ -143,6 +143,38 @@ cats.find({
 you can too use `findOne` method, that returns the first coincidence.
 
 ```js
+cats.findOne({
+   color: 'brown'
+}, 'name age')
+```
+
+---
+
+now, it's posible sort result, looks like this.
+
+```js
+cats.findSorted('> name')
+
+// returns
+[{
+   name: 'Destroyer',
+   age: 6,
+   color: 'brown'
+},{
+   name: 'Pillow paws',
+   age: 6,
+   color: 'white'
+},{
+   name: 'Sparky',
+   age: 4,
+   color: 'brown'
+}]
+
+```
+
+symbol `<` or `>` define if we want order data in `ascending` or `descending` way. and `name` represents the reference for order data, in this example ***name*** would be ***age:*** `cats.findSorted('< age')` or ***color*** `cats.findSorted('>color')`.
+
+```js
 // findOne ( conditions, fields )
 cats.findOne({
    color: 'brown'

@@ -35,12 +35,18 @@
     // check if register exists
     if ( data = JSON.parse(localStorage.getItem(this.collection)) ) {
       data.push(ob);
-      localStorage.setItem(this.collection, JSON.stringify(data));
+      localStorage.setItem (
+        this.collection,
+        JSON.stringify(data)
+      );
     } else {
       // insert data for first time
       data = []
       data.push(ob)
-      localStorage.setItem(this.collection, JSON.stringify(data));
+      localStorage.setItem (
+        this.collection,
+        JSON.stringify(data)
+      );
     }
   }
 
@@ -51,8 +57,8 @@
 
   let __finder_prot = function (values, nod, collection) {
     let data,
-        tmp = [],
-        tmpRefactor = {};
+    tmp = [],
+    tmpRefactor = {};
 
     // if values is defined
     if (values) {
@@ -110,10 +116,10 @@
 
 
     let data,
-        rules = [],
-        setterLength = 0,
-        whereLength = 0,
-        flag;
+      rules = [],
+      setterLength = 0,
+      whereLength = 0,
+      flag;
 
     // checking for all avalible setters
     for (s in ob.set) {
@@ -133,7 +139,7 @@
         for (w in ob.where) {
           flag += (ob.where[w] === data_el[w]) ? 1 : 0;
         }
-        // nodes
+        // nodes that will be returned
         if (flag === whereLength) {
           for (s in ob.set) {
             data[indx][s] = ob.set[s];
@@ -141,11 +147,32 @@
         }
       })
       // saving updated object
-      localStorage.setItem(this.collection, JSON.stringify(data))
+      localStorage.setItem (
+        this.collection,
+        JSON.stringify(data)
+      );
     } else {
       throw '[Store Error]: has been ocurred an error trying to get data from ' + this.collection;
     }
-  };
+  }
+
+  // Find and Sort method
+  Storaged.prototype.findSorted = function (order) {
+    let result, orderer, parmOrder;
+    if (typeof order !== 'string') throw '[Store Error]: Sort parameter should be String type';
+    if (!(orderer = order.match(/[<|>]/)[0])) throw '[Store Error]: Error processing';
+
+    parmOrder = order.replace(/[<|>]/, '').trim();
+    result = __finder_prot(undefined, undefined, this.collection);
+
+    return (
+      result.sort(function(a, b) {
+        return (orderer === '<')
+          ? a[parmOrder] < b[parmOrder]
+          : a[parmOrder] > b[parmOrder]
+      })
+    );
+  }
 
   return Storaged;
 });

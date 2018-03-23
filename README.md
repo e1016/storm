@@ -146,6 +146,13 @@ you can too use `findOne` method, that returns the first coincidence.
 cats.findOne({
    color: 'brown'
 }, 'name age')
+
+// returns
+{
+   name: 'Sparky',
+   age: 4
+}
+// IMPORTANT: this method does not return an array, is a single object
 ```
 
 ---

@@ -1,4 +1,10 @@
 
+/*
+*  Storm Js 0.5 beat!
+*  Eliseo Garaldo Gonzalez @e1016
+*  MIT
+*/
+
 (function (global, factory) {
 
   global.Collection = factory();
@@ -12,21 +18,21 @@
   }
 
   // checking for native localStorage support
-  let support = function support () {
+  var support = function support () {
     return localStorage !== undefined && localStorage !== null;
   }
 
   if (!support) throw '[Store Error]: localStorage is not supported!';
 
   // initializing Store class model
-  let Storaged = function (str) {
+  var Storaged = function (str) {
     if (!str && typeof str !== 'string') throw '[Store Error]: Collection reference is not defined';
     this.collection = str;
   }
 
   // Save method
   Storaged.prototype.save = function (ob) {
-    let data;
+    var data;
 
     // check for correct type of parameter
     // it should be an object
@@ -55,8 +61,8 @@
     localStorage.removeItem(this.collection);
   }
 
-  let __finder_prot = function (values, nod, collection) {
-    let data,
+  var __finder_prot = function (values, nod, collection) {
+    var data,
     tmp = [],
     tmpRefactor = {};
 
@@ -115,7 +121,7 @@
     }
 
 
-    let data,
+    var data,
       rules = [],
       setterLength = 0,
       whereLength = 0,
@@ -158,7 +164,8 @@
 
   // Find and Sort method
   Storaged.prototype.findSorted = function (order) {
-    let result, orderer, parmOrder;
+    var result, orderer, parmOrder;
+    
     if (typeof order !== 'string') throw '[Store Error]: Sort parameter should be String type';
     if (!(orderer = order.match(/[<|>]/)[0])) throw '[Store Error]: Error processing';
 

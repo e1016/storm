@@ -1,7 +1,14 @@
 
 (function (global, factory) {
 
-  global.Collection = factory();
+  // checking for exports avalible
+  if (typeof module !== 'undefined' && module.exports) {
+    // export Collection
+    module.exports = factory();
+  } else {
+    // else add to global variable
+    global.Collection = factory();
+  }
 
 }) (this, function () {
 
@@ -116,10 +123,10 @@
 
 
     let data,
-      rules = [],
-      setterLength = 0,
-      whereLength = 0,
-      flag;
+    rules = [],
+    setterLength = 0,
+    whereLength = 0,
+    flag;
 
     // checking for all avalible setters
     for (s in ob.set) {
@@ -168,8 +175,8 @@
     return (
       result.sort(function(a, b) {
         return (orderer === '<')
-          ? a[parmOrder] < b[parmOrder]
-          : a[parmOrder] > b[parmOrder]
+        ? a[parmOrder] < b[parmOrder]
+        : a[parmOrder] > b[parmOrder]
       })
     );
   }

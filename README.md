@@ -4,7 +4,7 @@
 </p>
 
 # Storm
-###### Storage Object-Relational Mapping v0.5.1 [BETA]
+###### Storage Object-Relational Mapping v1.0.0
 
 this library provides a light but powerful way to handle localStorage javascript data, in a simple CRUD.
 

@@ -1,10 +1,16 @@
 
-![Storm JS logo](./logo.png)
-
 # Storm
-###### Storage Object-Relational Mapping v0.5.0 [BETA]
+###### Storage Object-Relational Mapping v1.0.1
+
+<p align="center">
+   <img src="./logo.png" alt="Storm JS logo">
+</p>
 
 this library provides a light but powerful way to handle localStorage javascript data, in a simple CRUD.
+
+### Instalation
+
+`npm install storm-orm`
 
 ### Implementation
 
@@ -146,6 +152,13 @@ you can too use `findOne` method, that returns the first coincidence.
 cats.findOne({
    color: 'brown'
 }, 'name age')
+
+// returns
+{
+   name: 'Sparky',
+   age: 4
+}
+// IMPORTANT: this method does not return an array, is a single object
 ```
 
 ---
@@ -252,5 +265,3 @@ the simplest method.
 cats.delete()
 ```
 remove all data from collection.
-
-###### storm is currently in beta, wait for more soon...

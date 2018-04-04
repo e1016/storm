@@ -1,32 +1,39 @@
 
+/**
+ * Eliseo Geraldo · e1016 · MIT
+ * Storage Relational-Object Mapping
+ * 1.0.1 · 2018-04-04
+ */
+
 (function (global, factory) {
 
-  global.Collection = factory();
+  // checking for exports avalible
+  if (typeof module !== 'undefined' && module.exports) {
+    // export Collection
+    module.exports = factory();
+  } else {
+    // else add to global variable
+    global.Collection = factory();
+  }
 
 }) (this, function () {
 
-  function isArray(s) {
-    return typeof s === 'object' &&
-    s.length !== undefined &&
-    s.length !== null;
-  }
-
   // checking for native localStorage support
-  let support = function support () {
+  var support = function support () {
     return localStorage !== undefined && localStorage !== null;
   }
 
   if (!support) throw '[Store Error]: localStorage is not supported!';
 
   // initializing Store class model
-  let Storaged = function (str) {
+  var Storaged = function (str) {
     if (!str && typeof str !== 'string') throw '[Store Error]: Collection reference is not defined';
     this.collection = str;
   }
 
   // Save method
   Storaged.prototype.save = function (ob) {
-    let data;
+    var data;
 
     // check for correct type of parameter
     // it should be an object
@@ -55,8 +62,8 @@
     localStorage.removeItem(this.collection);
   }
 
-  let __finder_prot = function (values, nod, collection) {
-    let data,
+  var __finder_prot = function (values, nod, collection) {
+    var data,
     tmp = [],
     tmpRefactor = {};
 
@@ -115,11 +122,11 @@
     }
 
 
-    let data,
-      rules = [],
-      setterLength = 0,
-      whereLength = 0,
-      flag;
+    var data,
+    rules = [],
+    setterLength = 0,
+    whereLength = 0,
+    flag;
 
     // checking for all avalible setters
     for (s in ob.set) {
@@ -158,7 +165,7 @@
 
   // Find and Sort method
   Storaged.prototype.findSorted = function (order) {
-    let result, orderer, parmOrder;
+    var result, orderer, parmOrder;
     if (typeof order !== 'string') throw '[Store Error]: Sort parameter should be String type';
     if (!(orderer = order.match(/[<|>]/)[0])) throw '[Store Error]: Error processing';
 
@@ -168,8 +175,8 @@
     return (
       result.sort(function(a, b) {
         return (orderer === '<')
-          ? a[parmOrder] < b[parmOrder]
-          : a[parmOrder] > b[parmOrder]
+        ? a[parmOrder] < b[parmOrder]
+        : a[parmOrder] > b[parmOrder]
       })
     );
   }

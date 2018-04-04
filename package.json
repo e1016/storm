@@ -1,5 +1,5 @@
 {
-  "name": "storm",
+  "name": "storm-orm",
   "version": "0.5.0",
   "description": "",
   "main": "store.js",
@@ -13,7 +13,7 @@
     "javascript",
     "localStorageDB"
   ],
-  "author": "e1016",
+  "author": "Eliseo Geraldo Gonzalez <e10169610@gmail.com> (https://github.com/e1016)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/e1016/storm/issues"

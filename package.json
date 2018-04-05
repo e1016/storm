@@ -1,8 +1,8 @@
 {
   "name": "storm-orm",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
-  "main": "store.js",
+  "main": "storm.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/e1016/storm.git"

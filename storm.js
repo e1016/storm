@@ -2,7 +2,7 @@
 /**
  * Eliseo Geraldo · e1016 · MIT
  * Storage Relational-Object Mapping
- * 1.0.1 · 2018-04-04
+ * 1.0.3 · 2018-04-04
  */
 
 (function (global, factory) {

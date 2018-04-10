@@ -2,7 +2,7 @@
 /**
  * Eliseo Geraldo · e1016 · MIT
  * Storage Relational-Object Mapping
- * 1.0.3 · 2018-04-04
+ * 1.1.0 · 2018-04-04
  */
 
 (function (global, factory) {
@@ -117,16 +117,15 @@
     if (!ob.set) throw '[Store Error]: "set" node missing';
     if (!ob.where) throw '[Store Error]: "where" node missing';
 
-    if (typeof ob.where !== 'object' && typeof ob.set !== 'object') {
+    if (typeof ob.where !== 'object' || typeof ob.set !== 'object') {
       throw '[Store Error]: "Where" or "Set" node expects objects';
     }
 
-
     var data,
-    rules = [],
-    setterLength = 0,
-    whereLength = 0,
-    flag;
+      rules = [],
+      setterLength = 0,
+      whereLength = 0,
+      flag;
 
     // checking for all avalible setters
     for (s in ob.set) {
@@ -175,8 +174,8 @@
     return (
       result.sort(function(a, b) {
         return (orderer === '<')
-        ? a[parmOrder] < b[parmOrder]
-        : a[parmOrder] > b[parmOrder]
+          ? a[parmOrder] < b[parmOrder]
+          : a[parmOrder] > b[parmOrder]
       })
     );
   }

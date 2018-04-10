@@ -1,6 +1,6 @@
 {
   "name": "storm-orm",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Storage ORM for JavaScript",
   "main": "storm.js",
   "repository": {

@@ -1,6 +1,6 @@
 
 # Storm
-###### Storage Object-Relational Mapping v1.1.0
+###### Storage Object-Relational Mapping v1.2.0
 
 <p align="center">
    <img src="./logo.png" alt="Storm JS logo">
@@ -262,6 +262,6 @@ cats.find()
 
 the simplest method.
 ```js
-cats.delete()
+cats.erase()
 ```
 remove all data from collection.

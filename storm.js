@@ -58,7 +58,7 @@
   }
 
   // Delete method
-  Storaged.prototype.delete = function () {
+  Storaged.prototype.erase = function () {
     localStorage.removeItem(this.collection);
   }
 

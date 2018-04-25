@@ -187,18 +187,6 @@ cats.findSorted('> name')
 
 symbol `<` or `>` define if we want order data in `ascending` or `descending` way. and `name` represents the reference for order data, in this example ***name*** would be ***age:*** `cats.findSorted('< age')` or ***color*** `cats.findSorted('>color')`.
 
-```js
-// findOne ( conditions, fields )
-cats.findOne({
-   color: 'brown'
-}, 'name age')
-
-// returns
-{
-   name: 'Sparky',
-   age: 4
-}
-```
 ---
 #### Update
 

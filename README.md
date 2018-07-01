@@ -1,6 +1,6 @@
 
 # Storm
-###### Storage Object-Relational Mapping v1.2.0
+###### Storage Object-Relational Mapping v1.2.1
 
 <p align="center">
    <img src="./logo.png" alt="Storm JS logo">

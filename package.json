@@ -1,11 +1,14 @@
 {
   "name": "storm-orm",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Storage ORM for JavaScript",
-  "main": "storm.js",
+  "main": "dist/storm.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/e1016/storm.git"
+  },
+  "scripts": {
+    "build": "webpack --mode production"
   },
   "keywords": [
     "orm",
@@ -17,6 +20,10 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/e1016/storm/issues"
+  },
+  "devDependencies": {
+    "webpack": "^4.14.0",
+    "webpack-cli": "^3.0.8"
   },
   "homepage": "https://github.com/e1016/storm#readme"
 }

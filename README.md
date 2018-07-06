@@ -29,6 +29,10 @@ const coolestCats = new Collection('cats')
 ```
 both variables (`cats`, `coolestCats`) will have an impact on the same data.
 
+### now support for sessionStorage
+```js
+const cats = new Collection('cats', { storeOnSession: true })
+```
 ---
 
 ### CRUD
@@ -142,6 +146,28 @@ cats.find({
    name: 'Destroyer',
    age: 6
 }]
+```
+
+## new
+
+Now avalibe `first` and `last` methods in collections.
+
+```js
+cats.find().last()
+/* or */
+cats.find({
+  name: 'Sparky'
+}).first()
+```
+
+can be apply in sorted collection
+
+```js
+cats.findSorted('< name').first()
+/* or */
+const someCats = cats.findSorted('> age')
+
+someCats.last()
 ```
 
 ---

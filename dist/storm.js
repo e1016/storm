@@ -46,8 +46,6 @@
 
     this.storageType = (conf && conf.storeOnSession) ? 'sessionStorage' : 'localStorage'
 
-    console.log(this.storageType);
-
     if (!str && typeof str !== 'string') throw new Error (
       '[Store Error]: Collection reference is not defined ' +
       'Collection constructor expects a String for use as ' +
@@ -132,8 +130,6 @@
       if (storeCollection.length) polluteCollection(storeCollection)
       return storeCollection
     } else {
-
-      console.log('storageType', storageType);
 
       storeCollection = json(window[storageType].getItem(collection))
       if (storeCollection.length) polluteCollection(storeCollection)

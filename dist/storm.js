@@ -28,14 +28,30 @@
     return localStorage !== undefined && localStorage !== null
   }
 
-  if (!support) throw '[Store Error]: localStorage is not supported!'
+  /*
+  * Methods for convert JSON <-> String
+  */
+  var json = function (str) {
+    return JSON.parse(str)
+  }
+
+  var string = function (obj) {
+    return JSON.stringify(obj)
+  }
+
+  if (!support) throw '[Store Error]: local and session storage is not supported!'
 
   // initializing Store class model
-  var StormCollection = function (str) {
+  var StormCollection = function (str, conf) {
+
+    this.storageType = (conf && conf.storeOnSession) ? 'sessionStorage' : 'localStorage'
+
+    console.log(this.storageType);
+
     if (!str && typeof str !== 'string') throw new Error (
       '[Store Error]: Collection reference is not defined ' +
       'Collection constructor expects a String for use as ' +
-      'a referenc in localStorage'
+      'a referenc in ' + conf.storeOnSession ? 'session' : 'local' + 'Storage'
     )
     // all is fine
     this.collection = str
@@ -45,26 +61,14 @@
   StormCollection.prototype.save = function (ob) {
     var data
 
-    /*
-    * Methods for convert JSON <-> String
-    */
-    var json = function (str) {
-      return JSON.parse(str)
-    }
-
-    var string = function (obj) {
-      return JSON.stringify(obj)
-    }
-
-
     // check for correct type of parameter
     // it should be an object
     if  (typeof ob !== 'object') throw '[Store Error]: "save" method expect a JSON'
 
     // check if register exists
-    if ( data = json(localStorage.getItem(this.collection)) ) {
+    if ( data = json(window[this.storageType].getItem(this.collection)) ) {
       data.push(ob)
-      localStorage.setItem (
+      window[this.storageType].setItem (
         this.collection,
         string(data)
       )
@@ -72,7 +76,7 @@
       // insert data for first time
       data = []
       data.push(ob)
-      localStorage.setItem (
+      window[this.storageType].setItem (
         this.collection,
         string(data)
       )
@@ -80,20 +84,25 @@
   }
 
   // Delete method
-  StormCollection.prototype.delete = function () {
-    localStorage.removeItem(this.collection)
+  StormCollection.prototype.erase = function () {
+    window[this.storageType].removeItem(this.collection)
   }
 
-  var __finder_prot = function (values, nod, collection) {
+  var polluteCollection = function (obj) {
+    obj.__proto__.last = function () { return this[obj.length - 1] }
+    obj.__proto__.first = function () { return this[0] }
+  }
+
+  var __finder_prot = function (values, nod, collection, storageType) {
     var data
-    var tmp = []
+    var storeCollection = []
     var refactor = {}
 
     // if values is defined
     if (values) {
 
       if (typeof values !== 'object') throw '[Store Error]: "find" method expect a JSON'
-      data = json(localStorage.getItem(collection))
+      data = json(window[storageType].getItem(collection))
 
       // if the node is defined, it responds
       // only with the requested nodes
@@ -104,7 +113,7 @@
               ( nod.split(/ +/g) ).forEach(function (nodMirror) {
                 refactor[nodMirror] = el[nodMirror]
               })
-              tmp.push(refactor)
+              storeCollection.push(refactor)
               refactor = {}
             }
           })
@@ -114,25 +123,33 @@
         for (var __j_key in values) {
           data.forEach(function (el) {
             if (el[__j_key] == values[__j_key]) {
-              tmp.push(el)
+              storeCollection.push(el)
             }
           })
         }
       }
-      return tmp
+
+      if (storeCollection.length) polluteCollection(storeCollection)
+      return storeCollection
     } else {
-      return json(localStorage.getItem(collection))
+
+      console.log('storageType', storageType);
+
+      storeCollection = json(window[storageType].getItem(collection))
+      if (storeCollection.length) polluteCollection(storeCollection)
+      return storeCollection
+
     }
   }
 
   // Find method
   StormCollection.prototype.find = function (values, nod) {
-    return __finder_prot(values, nod, this.collection)
+    return __finder_prot(values, nod, this.collection, this.storageType)
   }
 
   // Find one method
   StormCollection.prototype.findOne = function (values, nod) {
-    return (__finder_prot(values, nod, this.collection))[0]
+    return (__finder_prot(values, nod, this.collection, this.storageType))[0]
   }
 
   // update method
@@ -156,7 +173,7 @@
     // check for all conditions
     for (w in ob.where) whereLength++
 
-    if (data = json(localStorage.getItem(this.collection))) {
+    if (data = json(window[this.storageType].getItem(this.collection))) {
       data.forEach(function(data_el, indx) {
         flag = 0 // <- resetting flag to 0
         // checking for coincidences in each of stored object
@@ -168,7 +185,7 @@
         }
       })
       // saving updated object
-      localStorage.setItem (
+      window[this.storageType].setItem (
         this.collection,
         string(data)
       )
@@ -184,7 +201,7 @@
     if (!(orderer = order.match(/[<|>]/)[0])) throw '[Store Error]: Error processing'
 
     parmOrder = order.replace(/[<|>]/, '').trim()
-    result = __finder_prot(undefined, undefined, this.collection)
+    result = __finder_prot(undefined, undefined, this.collection, this.storageType)
 
     return (
       result.sort(function(a, b) {
@@ -193,6 +210,10 @@
         : a[parmOrder] > b[parmOrder]
       })
     )
+  }
+
+  StormCollection.prototype.exists = function () {
+    return !!window[this.storageType].getItem(this.collection)
   }
 
   return StormCollection

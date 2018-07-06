@@ -11,14 +11,10 @@
   // checking for exports avalible
   if (typeof module !== 'undefined' && module.exports) {
     // export Collection
-    'app'
     module.exports = factory()
-    'app'
   } else {
     // else add to global variable
-    'app2'
     global['Collection'] = factory()
-    'app2'
   }
 
 }) (this, function () {

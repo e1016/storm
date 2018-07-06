@@ -2,7 +2,7 @@
 /**
 * Eliseo Geraldo · <e10169610@gmail.com>
 * Storage Relational-Object Mapping
-* 1.2.1 beta · 2018-06-30
+* 1.3.0 beta · 2018-06-30
 * lic · MIT
 */
 

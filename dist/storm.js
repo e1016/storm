@@ -40,7 +40,14 @@
   // initializing Store class model
   var StormCollection = function (str, conf) {
 
+    /*
+    * Config collection for sessionStorage or localStorage
+    */
     this.storageType = (conf && conf.storeOnSession) ? 'sessionStorage' : 'localStorage'
+    /*
+    * callbackStacks
+    */
+    this.callbackStack = { save: [], find: [], erase: [], update: [] }
 
     if (!str && typeof str !== 'string') throw new Error (
       '[Store Error]: Collection reference is not defined ' +
@@ -53,6 +60,9 @@
 
   // Save method
   StormCollection.prototype.save = function (ob) {
+    // dispatch save events
+    this.callbackStack.save.forEach (function (callback) { callback(ob) })
+
     var data
 
     // check for correct type of parameter
@@ -79,6 +89,7 @@
 
   // Delete method
   StormCollection.prototype.erase = function () {
+    this.callbackStack.erase.forEach(function (callback) { callback() })
     window[this.storageType].removeItem(this.collection)
   }
 
@@ -136,22 +147,30 @@
 
   // Find method
   StormCollection.prototype.find = function (values, nod) {
-    return __finder_prot(values, nod, this.collection, this.storageType)
+    var result = __finder_prot(values, nod, this.collection, this.storageType)
+    this.callbackStack.find.forEach(function (callback) { callback(result) })
+    return result
   }
 
   // Find one method
   StormCollection.prototype.findOne = function (values, nod) {
-    return (__finder_prot(values, nod, this.collection, this.storageType))[0]
+    var result = (__finder_prot(values, nod, this.collection, this.storageType))[0]
+    this.callbackStack.find.forEach(function (callback) { callback(result) })
+    return result
   }
 
   // update method
   StormCollection.prototype.update = function (ob) {
+
+
     if (!ob.set || !ob.where) throw '[Store Error]: "set" or "where" node missing'
 
     if (
       typeof ob.where !== 'object' ||
       typeof ob.set !== 'object'
     ) throw '[Store Error]: "where" or "set" node expects objects'
+
+    this.callbackStack.update.forEach (function (callback) { callback(ob) })
 
     var data
     var rules = []
@@ -195,17 +214,28 @@
     parmOrder = order.replace(/[<|>]/, '').trim()
     result = __finder_prot(undefined, undefined, this.collection, this.storageType)
 
-    return (
-      result.sort(function(a, b) {
-        return (orderer === '<')
-        ? a[parmOrder] < b[parmOrder]
-        : a[parmOrder] > b[parmOrder]
-      })
-    )
+    var sortedResult = result.sort(function(a, b) {
+      return (orderer === '<')
+      ? a[parmOrder] < b[parmOrder]
+      : a[parmOrder] > b[parmOrder]
+    })
+
+    this.callbackStack.find.forEach(function (callback) {
+      callback(sortedResult)
+    })
+
+    return sortedResult
   }
 
   StormCollection.prototype.exists = function () {
     return !!window[this.storageType].getItem(this.collection)
+  }
+
+  StormCollection.prototype.on = function (type, callback) {
+    if (typeof callback !== 'function') throw new Error ('onSave methods expects a function')
+    if (['find', 'save', 'erase', 'update'].indexOf(type) < 0) throw new Error (type + ' is invalid event')
+
+    this.callbackStack[type].push(callback)
   }
 
   return StormCollection

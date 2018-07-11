@@ -148,8 +148,6 @@ cats.find({
 }]
 ```
 
-## new
-
 Now avalibe `first` and `last` methods in collections.
 
 ```js
@@ -279,3 +277,22 @@ the simplest method.
 cats.erase()
 ```
 remove all data from collection.
+
+---
+
+#### methods
+
+```js
+
+cats.on('find', function () {
+
+})
+
+// avalibe methods:
+
+cats.on('save'...
+cats.on('find'...
+cats.on('erase'...
+cats.on('update'...
+
+```

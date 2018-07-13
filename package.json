@@ -21,9 +21,5 @@
   "bugs": {
     "url": "https://github.com/e1016/storm/issues"
   },
-  "devDependencies": {
-    "webpack": "^4.14.0",
-    "webpack-cli": "^3.0.8"
-  },
   "homepage": "https://github.com/e1016/storm#readme"
 }

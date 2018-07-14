@@ -139,7 +139,7 @@
     } else {
 
       storeCollection = json(window[storageType].getItem(collection))
-      if (storeCollection.length) polluteCollection(storeCollection)
+      if (storeCollection) polluteCollection(storeCollection)
       return storeCollection
 
     }

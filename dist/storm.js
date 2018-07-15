@@ -125,9 +125,9 @@
         }
         // else, request all nodes
       } else {
-        for (var __j_key in values) {
-          data.forEach(function (el) {
-            if (el[__j_key] == values[__j_key]) {
+         for (var __j_key in values) {
+            data.forEach(function (el) {
+            if (el[__j_key] == values[__j_key] && !storeCollection.includes(el)) {
               storeCollection.push(el)
             }
           })

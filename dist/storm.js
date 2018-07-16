@@ -45,7 +45,7 @@
     */
     this.storageType = (conf && conf.storeOnSession) ? 'sessionStorage' : 'localStorage'
     /*
-    * callbackStacks
+    * callback stacks
     */
     this.callbackStack = { save: [], find: [], erase: [], update: [] }
 
@@ -127,7 +127,7 @@
       } else {
          for (var __j_key in values) {
             data.forEach(function (el) {
-            if (el[__j_key] == values[__j_key] && !storeCollection.includes(el)) {
+            if (el[__j_key] == values[__j_key] && (storeCollection.indexOf(el) < 0)) {
               storeCollection.push(el)
             }
           })
@@ -161,7 +161,6 @@
 
   // update method
   StormCollection.prototype.update = function (ob) {
-
 
     if (!ob.set || !ob.where) throw '[Store Error]: "set" or "where" node missing'
 

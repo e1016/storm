@@ -280,7 +280,7 @@ remove all data from collection.
 
 ---
 
-#### methods
+#### listeners
 
 ```js
 
@@ -288,7 +288,7 @@ cats.on('find', function () {
 
 })
 
-// avalibe methods:
+// avalible events:
 
 cats.on('save'...
 cats.on('find'...

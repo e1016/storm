@@ -1,10 +1,12 @@
-
 # Storm
-###### Storage Object-Relational Mapping v1.3.0
 
 <p align="center">
-   <img src="./logo.png" alt="Storm JS logo">
+   <img src="https://i.imgur.com/H2ohkEI.png" width="250" alt="Storm JS logo">
+   <br>
+   Storage Object-Relational Mapping v1.3.0
 </p>
+
+[storm for React Native – AsyncStorage manager](https://github.com/e1016/storm-react-native)
 
 this library provides a light but powerful way to handle localStorage javascript data, in a simple CRUD.
 

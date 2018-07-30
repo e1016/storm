@@ -3,7 +3,7 @@
 <p align="center">
    <img src="https://i.imgur.com/H2ohkEI.png" width="250" alt="Storm JS logo">
    <br>
-   Storage Object-Relational Mapping v1.3.0
+   LocalStorage manager for JavaScript
 </p>
 
 [storm for React Native – AsyncStorage manager](https://github.com/e1016/storm-react-native)

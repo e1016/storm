@@ -6,18 +6,18 @@
 * lic · MIT
 */
 
-(function (global, factory) {
+(function (factory) {
 
   // checking for exports avalible
   if (typeof module !== 'undefined' && module.exports) {
     // export Collection
-    module.exports = factory()
+    module.exports.Collection = factory()
   } else {
-    // else add to global variable
-    global['Collection'] = factory()
+    // else add to root variable
+    window['Collection'] = factory()
   }
 
-}) (this, function () {
+}) (function () {
 
   // checking for native localStorage support
   var support = function support () {
@@ -141,7 +141,6 @@
       storeCollection = json(window[storageType].getItem(collection))
       if (storeCollection) polluteCollection(storeCollection)
       return storeCollection
-
     }
   }
 
@@ -236,6 +235,5 @@
 
     this.callbackStack[type].push(callback)
   }
-
   return StormCollection
 })

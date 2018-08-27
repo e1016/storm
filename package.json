@@ -8,7 +8,8 @@
     "url": "git+https://github.com/e1016/storm.git"
   },
   "scripts": {
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development"
   },
   "keywords": [
     "orm",

@@ -55,7 +55,7 @@
       'a referenc in ' + conf.storeOnSession ? 'session' : 'local' + 'Storage'
     )
     // all is fine
-    this.collection = str
+    this.storeReference = str
   }
 
   // Save method
@@ -70,10 +70,10 @@
     if  (typeof ob !== 'object') throw '[Store Error]: "save" method expect a JSON'
 
     // check if register exists
-    if ( data = json(window[this.storageType].getItem(this.collection)) ) {
+    if ( data = json(window[this.storageType].getItem(this.storeReference)) ) {
       data.push(ob)
       window[this.storageType].setItem (
-        this.collection,
+        this.storeReference,
         string(data)
       )
     } else {
@@ -81,16 +81,42 @@
       data = []
       data.push(ob)
       window[this.storageType].setItem (
-        this.collection,
+        this.storeReference,
         string(data)
       )
     }
   }
 
   // Delete method
-  StormCollection.prototype.erase = function () {
+  StormCollection.prototype.erase = function (conditions) {
+
+    if (conditions) {
+      var store = json(window[this.storageType].getItem(this.storeReference))
+      var matchCounter
+      var keeped = [], erased = []
+      var conditionsLength = Object.keys(conditions).length
+
+      store.forEach(function (el) {
+        matchCounter = 0
+        for (var conKey in conditions)
+          if (conditions[conKey] === el[conKey]) matchCounter++
+
+        if (conditionsLength === matchCounter)
+          erased.push(el)
+        else
+          keeped.push(el)
+      })
+      window[this.storageType].setItem(this.storeReference, string(keeped))
+      return {
+        keeped: keeped,
+        erased: erased
+      }
+    } else {
+      window[this.storageType].removeItem(this.storeReference)
+    }
+
+
     this.callbackStack.erase.forEach(function (callback) { callback() })
-    window[this.storageType].removeItem(this.collection)
   }
 
   var polluteCollection = function (obj) {
@@ -98,12 +124,30 @@
     obj.__proto__.first = function () { return this[0] }
   }
 
-  var __finder_prot = function (values, nod, collection, storageType) {
+  /**
+  * function baseFinderMethod returns
+  * entire collection, based on some parameters
+  *
+  * @param values is used for define filter
+  * collection, for example, find user where age
+  * is 23, or name is "Juan"
+  *
+  * @param nod who fields we get, for example,
+  * get name, age and _id
+  *
+  * @param collection contains a reference
+  * for manipulate data in storage
+  * localStorage.getItem(collection)
+  *
+  * @param storageType works for switch between
+  * localStorage and sessionStorage
+  */
+
+  var baseFinderMethod = function (values, nod, collection, storageType) {
     var data
     var storeCollection = []
-    var refactor = {}
+    var refactoredObject = {}
 
-    // if values is defined
     if (values) {
 
       if (typeof values !== 'object') throw '[Store Error]: "find" method expect a JSON'
@@ -112,22 +156,22 @@
       // if the node is defined, it responds
       // only with the requested nodes
       if (nod && typeof nod === 'string') {
-        for (var __j_key in values) {
-          data.forEach(function(el) {
-            if (el[__j_key] == values[__j_key]) {
-              ( nod.split(/ +/g) ).forEach(function (nodMirror) {
-                refactor[nodMirror] = el[nodMirror]
+        for (var JsonKey in values) {
+          data.forEach(function (el) {
+            if (el[JsonKey] == values[JsonKey]) {
+              nod.split(/ +/g).forEach(function (nodMirror) {
+                refactoredObject[nodMirror] = el[nodMirror]
               })
-              storeCollection.push(refactor)
-              refactor = {}
+              storeCollection.push(refactoredObject)
+              refactoredObject = {}
             }
           })
         }
         // else, request all nodes
       } else {
-         for (var __j_key in values) {
+         for (var JsonKey in values) {
             data.forEach(function (el) {
-            if (el[__j_key] == values[__j_key] && (storeCollection.indexOf(el) < 0)) {
+            if (el[JsonKey] == values[JsonKey] && (storeCollection.indexOf(el) < 0)) {
               storeCollection.push(el)
             }
           })
@@ -146,14 +190,14 @@
 
   // Find method
   StormCollection.prototype.find = function (values, nod) {
-    var result = __finder_prot(values, nod, this.collection, this.storageType)
+    var result = baseFinderMethod(values, nod, this.storeReference, this.storageType)
     this.callbackStack.find.forEach(function (callback) { callback(result) })
     return result
   }
 
   // Find one method
   StormCollection.prototype.findOne = function (values, nod) {
-    var result = (__finder_prot(values, nod, this.collection, this.storageType))[0]
+    var result = (baseFinderMethod(values, nod, this.storeReference, this.storageType))[0]
     this.callbackStack.find.forEach(function (callback) { callback(result) })
     return result
   }
@@ -182,11 +226,11 @@
     // check for all conditions
     for (w in ob.where) whereLength++
 
-    if (data = json(window[this.storageType].getItem(this.collection))) {
+    if (data = json(window[this.storageType].getItem(this.storeReference))) {
       data.forEach(function(data_el, indx) {
         flag = 0 // <- resetting flag to 0
         // checking for coincidences in each of stored object
-        // conditios
+        // conditions
         for (w in ob.where) flag += (ob.where[w] === data_el[w]) ? 1 : 0
         // nodes that will be returned
         if (flag === whereLength) {
@@ -195,11 +239,11 @@
       })
       // saving updated object
       window[this.storageType].setItem (
-        this.collection,
+        this.storeReference,
         string(data)
       )
     } else {
-      throw new Error('[Store Error]: has been ocurred an error trying to get data from ' + this.collection)
+      throw new Error('[Store Error]: has been ocurred an error trying to get data from ' + this.storeReference)
     }
   }
 
@@ -210,7 +254,7 @@
     if (!(orderer = order.match(/[<|>]/)[0])) throw '[Store Error]: Error processing'
 
     parmOrder = order.replace(/[<|>]/, '').trim()
-    result = __finder_prot(undefined, undefined, this.collection, this.storageType)
+    result = baseFinderMethod(undefined, undefined, this.storeReference, this.storageType)
 
     var sortedResult = result.sort(function(a, b) {
       return (orderer === '<')
@@ -226,7 +270,7 @@
   }
 
   StormCollection.prototype.exists = function () {
-    return !!window[this.storageType].getItem(this.collection)
+    return !!window[this.storageType].getItem(this.storeReference)
   }
 
   StormCollection.prototype.on = function (type, callback) {

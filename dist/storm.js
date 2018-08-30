@@ -1,8 +1,8 @@
 
 /**
 * Eliseo Geraldo · <e10169610@gmail.com>
-* Storage Relational-Object Mapping
-* 1.3.0 beta · 2018-06-30
+* Storm Storage
+* 1.3.4 beta · 2018-07-30
 * lic · MIT
 */
 

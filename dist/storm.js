@@ -11,7 +11,7 @@
   // checking for exports avalible
   if (typeof module !== 'undefined' && module.exports) {
     // export Collection
-    module.exports.Collection = factory()
+    module.exports = factory()
   } else {
     // else add to root variable
     window['Collection'] = factory()

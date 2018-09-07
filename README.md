@@ -7,7 +7,9 @@
 </p>
 
 <p align="center">
-  [storm for React Native – AsyncStorage manager](https://github.com/e1016/storm-react-native)
+  <a href="https://github.com/e1016/storm-react-native">
+    storm for React Native – AsyncStorage manager
+  </a>
 </p>
 
 <p align="center">
@@ -27,5 +29,7 @@
 </h3>
 
 <p align="center">
-  [https://storm.eliseo.io](https://storm.eliseo.io)
+  <a href="https://storm.eliseo.io">
+    https://storm.eliseo.io
+  </a>
 </p>
